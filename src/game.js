@@ -5,29 +5,31 @@ const STRIKE = "X";
 const SPARE = "/";
 
 class Game {
+  #scores
+
   constructor() {
-    this._scores = [];
+    this.#scores = [];
   }
 
   #isLastIndex(idx) {
-    const lastIndex = this._scores.length - 1;
+    const lastIndex = this.#scores.length - 1;
     return lastIndex === idx;
   }
 
   #checkEmpty() {
-    if (this._scores.length === 1 && this._scores[0].score === STRIKE) {
+    if (this.#scores.length === 1 && this.#scores[0].score === STRIKE) {
       return "Empty";
     }
 
     if (
-      this._scores.length === 2 &&
-      this._scores[0].score === STRIKE &&
-      this._scores[1].score === STRIKE
+      this.#scores.length === 2 &&
+      this.#scores[0].score === STRIKE &&
+      this.#scores[1].score === STRIKE
     ) {
       return "Empty";
     }
 
-    if (this._scores.length === 2 && this._scores[1].score === SPARE) {
+    if (this.#scores.length === 2 && this.#scores[1].score === SPARE) {
       return "Empty";
     }
   }
@@ -39,20 +41,20 @@ class Game {
     }
 
     if (value === SPARE) {
-      return MAX_VALUE - this._scores[currentIndex - 1].score;
+      return MAX_VALUE - this.#scores[currentIndex - 1].score;
     }
     return parseInt(value);
   }
 
   #getCurrentStrikeValue(idx) {
     // tenth frame needs to be handled diffrerently 
-    if (this._scores[idx].frame === LAST_FRAME) {
+    if (this.#scores[idx].frame === LAST_FRAME) {
       return MAX_VALUE;
     }
 
-    if (this._scores[idx + 1] && this._scores[idx + 2]) {
-      const val1 = this.#parseValueToInt(this._scores[idx + 1].score, idx + 1);
-      const val2 = this.#parseValueToInt(this._scores[idx + 2].score, idx + 2);
+    if (this.#scores[idx + 1] && this.#scores[idx + 2]) {
+      const val1 = this.#parseValueToInt(this.#scores[idx + 1].score, idx + 1);
+      const val2 = this.#parseValueToInt(this.#scores[idx + 2].score, idx + 2);
       const currentStrike = MAX_VALUE;
 
       return val1 + val2 + currentStrike;
@@ -63,13 +65,13 @@ class Game {
 
   #getCurrentSpareValue(idx) {
     // tenth frame needs to be handled diffrerently 
-    if (this._scores[idx].frame === LAST_FRAME) {
-      return MAX_VALUE - this._scores[idx - 1].score;
+    if (this.#scores[idx].frame === LAST_FRAME) {
+      return MAX_VALUE - this.#scores[idx - 1].score;
     }
 
-    if (this._scores[idx + 1]) {
-      const val = this.#parseValueToInt(this._scores[idx + 1].score, idx);
-      const currentSpareValue = MAX_VALUE - this._scores[idx - 1].score;
+    if (this.#scores[idx + 1]) {
+      const val = this.#parseValueToInt(this.#scores[idx + 1].score, idx);
+      const currentSpareValue = MAX_VALUE - this.#scores[idx - 1].score;
       return currentSpareValue + val;
     } else {
       return 0;
@@ -79,7 +81,7 @@ class Game {
   // adds the roll score and tracks the frame number
   // for that score 
   addScore(score, frame) {
-    this._scores.push({ score, frame });
+    this.#scores.push({ score, frame });
   }
 
   // calculates the score up until the last roll
@@ -92,8 +94,8 @@ class Game {
       return empty;
     }
 
-    for (let i = 0; i < this._scores.length; i++) {
-      const val = this._scores[i].score;
+    for (let i = 0; i < this.#scores.length; i++) {
+      const val = this.#scores[i].score;
       const idx = i;
 
       if (val === STRIKE) {
@@ -106,8 +108,8 @@ class Game {
 
         // it handles the case for [[1,2] [7,/]]
         // so we are not calulating the value of 7
-        if (this.#isLastIndex(idx) && this._scores[i].frame !== LAST_FRAME) {
-          total = total - this._scores[idx - 1].score;
+        if (this.#isLastIndex(idx) && this.#scores[i].frame !== LAST_FRAME) {
+          total = total - this.#scores[idx - 1].score;
         }
       } else {
         total += this.#parseValueToInt(val, idx);
