@@ -51,7 +51,7 @@ describe("Blowing Scoring System", () => {
     expect(player.score).toBe(300);
   });
 
-  test("Player Scores all strike except the last frame", () => {
+  test("Player has has no score because its the first frame", () => {
     const player = new Player();
 
     player.addScore("X", 1);
