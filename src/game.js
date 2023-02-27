@@ -5,11 +5,7 @@ const STRIKE = "X";
 const SPARE = "/";
 
 class Game {
-  #scores
-
-  constructor() {
-    this.#scores = [];
-  }
+  #scores = []
 
   #isLastIndex(idx) {
     const lastIndex = this.#scores.length - 1;
