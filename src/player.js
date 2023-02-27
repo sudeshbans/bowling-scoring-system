@@ -4,7 +4,7 @@ const LAST_FRAME = 10;
 const STRIKE = "X";
 const SPARE = "/";
 
-class Game {
+class Player {
   #scores = []
 
   #isLastIndex(idx) {
@@ -116,4 +116,4 @@ class Game {
   }
 }
 
-module.exports = Game;
+module.exports = Player;

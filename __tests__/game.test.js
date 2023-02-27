@@ -1,6 +1,42 @@
-const Player = require("../src/game");
+const Player = require("../src/player");
 
 describe("Blowing Scoring System", () => {
+  test("Player all open frames", () => {
+    const player = new Player();
+
+    player.addScore("2", 1);
+    player.addScore("3", 1);
+
+    player.addScore("4", 2);
+    player.addScore("3", 2);
+
+    player.addScore("5", 3);
+    player.addScore("1", 3);
+
+    player.addScore("3", 4);
+    player.addScore("3", 4);
+
+    player.addScore("3", 5);
+    player.addScore("4", 5);
+
+    player.addScore("3", 6);
+    player.addScore("2", 6);
+
+    player.addScore("1", 7);
+    player.addScore("1", 7);
+
+    player.addScore("0", 8);
+    player.addScore("2", 8);
+
+    player.addScore("5", 9);
+    player.addScore("2", 9);
+
+    player.addScore("2", 10);
+    player.addScore("2", 10);
+
+    expect(player.score).toBe(51);
+  });
+
   test("Player Scores all Strike", () => {
     const player = new Player();
 

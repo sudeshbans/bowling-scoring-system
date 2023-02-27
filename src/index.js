@@ -1,6 +1,6 @@
 "use strict";
 const prompt = require("prompt-sync")();
-const Game = require("./game");
+const Player = require("./player");
 
 const GAME_LENGTH = 10;
 const VALID_CHARS = "0123456789X/";
@@ -31,17 +31,17 @@ const startGame = () => {
     console.log("-------------- Bowling Score Keeper! ----------------------");
     console.log("-----------------------------------------------------------");
 
-    const game = new Game();
+    const palyer = new Player();
 
     for (let i = 1; i <= GAME_LENGTH; i++) {
       const values = prompt(`Input your score for the frame ${i}:  `);
 
       const parsedValues = parseAndSanitizeInput(values, i);
 
-      parsedValues.forEach((v) => game.addScore(v, i));
+      parsedValues.forEach((v) => palyer.addScore(v, i));
 
       console.log(
-        `Your current Frame: ${i} and your current score ${game.score}`
+        `Your current Frame: ${i} and your current score ${palyer.score}`
       );
     }
   } catch (e) {
